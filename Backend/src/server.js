@@ -2,11 +2,30 @@ import express from "express";
 import productRoutes from "./routes/productRoutes.js";
 import dotenv from "dotenv";
 import { connectDB } from "./config/db.js";
+import cors from "cors";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5001;
+const allowedOrigins = [
+  "http://localhost:5173", // local dev
+  "#", // your Vercel frontend
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
 // Middleware
 app.use(express.json());
