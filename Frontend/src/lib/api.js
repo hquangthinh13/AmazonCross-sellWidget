@@ -9,29 +9,22 @@ console.log("API base URL:", BASE_URL);
 
 const api = axios.create({
   baseURL: BASE_URL,
-  withCredentials: false, // using JWT, not cookies
+  withCredentials: false,
 });
 
-// 🔑 Interceptor to attach token
+// ✅ Simple version — no token or interceptors
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+    // You can still customize headers here if needed
     return config;
   },
   (error) => Promise.reject(error)
 );
 
-// 🔑 Optional: auto-logout on 401/403
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401 || error.response?.status === 403) {
-      localStorage.removeItem("token");
-      window.location.href = "/login"; // or use navigate if inside React
-    }
+    // Just forward the error, no auth redirect
     return Promise.reject(error);
   }
 );

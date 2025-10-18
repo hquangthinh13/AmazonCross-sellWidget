@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
 import { Star, ShoppingCart } from "lucide-react";
+import fallback from "../assets/images/fallback-image.png";
 
 const ProductCard = ({ product }) => {
   const renderStars = (rating) => {
@@ -27,22 +28,21 @@ const ProductCard = ({ product }) => {
   };
   return (
     <Card className="mx-auto w-full h-fit hover:shadow-lg transition overflow-hidden delay-150 duration-300 ease-in-out">
-      {/* Cover image */}
-      <div className="overflow-hidden">
-        <Link to={`/products/${product._id}`}>
+      {/* Cover image */}{" "}
+      <Link to={`/${product._id}`}>
+        <div className="overflow-hidden aspect-square flex justify-center items-center">
           <img
-            src={product?.images?.[0]?.large || "fallback.jpg"}
+            src={product?.images?.[0]?.large || fallback}
             alt={product?.title || "No title"}
-            className="cursor-pointer h-auto w-full object-cover transition-transform duration-300 ease-in-out hover:scale-105"
-          />{" "}
-        </Link>
-      </div>
-
+            className="cursor-pointer max-w-full max-h-full object-contain transition-transform duration-300 ease-in-out hover:scale-105"
+          />
+        </div>
+      </Link>
       {/* Content */}
       <CardContent className="p-4 h-fit">
         {/* Title */}
-        <Link to={`/products/${product._id}`}>
-          <h2 className="cursor-pointer text-xl font-semibold text-[var(--card-foreground)] mb-0 antialiased hover:text-accent-foreground transition-colors duration-200 ease-in-out">
+        <Link to={`/${product._id}`}>
+          <h2 className="line-clamp-4 cursor-pointer text-lg font-semibold text-[var(--card-foreground)] mb-0 antialiased hover:text-accent-foreground transition-colors duration-200 ease-in-out">
             {product.title}
           </h2>{" "}
         </Link>
@@ -56,7 +56,7 @@ const ProductCard = ({ product }) => {
             <span className="text-xs text-muted-foreground">
               <span className="font-medium">
                 {product.average_rating.toFixed(1)}
-              </span>{" "}
+              </span>
               ({product.rating_number})
             </span>
           </div>
@@ -82,7 +82,6 @@ const ProductCard = ({ product }) => {
           </span>
           <Button variant="ghost" className="cursor-pointer">
             <ShoppingCart />
-            Add to Cart
           </Button>
         </div>
       </CardContent>

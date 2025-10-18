@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import api from "../lib/api";
 
 import SearchBar from "../components/searchbar";
 import ProductCard from "../components/ProductCard";
+import CarouselBanner from "../components/carousel-banner";
 import Navbar from "../components/navbar";
 import {
   Pagination,
@@ -25,38 +27,47 @@ const ProductPage = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  // 🔁 Sync state with URL on first render
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const q = params.get("q") || "";
-    const sort = params.get("sort") || "Default";
-    const p = parseInt(params.get("page")) || 1;
 
-    setSearchQuery(q);
-    setSortOption(sort);
-    setPage(p);
-  }, [location.search]);
   // 🔍 Fetch data
-  const fetchProducts = async () => {
-    try {
-      const params = new URLSearchParams({
-        page,
-        limit,
-        ...(searchQuery && { search: searchQuery }),
-        ...(sortOption && sortOption !== "Default" && { sort: sortOption }),
-      });
-      const res = await fetch(`http://localhost:5001/api/products?${params}`);
-      const data = await res.json();
-      setProducts(data.products);
-      setTotalPages(data.totalPages);
-    } catch (err) {
-      console.error("Error fetching products:", err);
-    }
-  };
 
   useEffect(() => {
+    const controller = new AbortController();
+
+    const fetchProducts = async () => {
+      try {
+        const params = new URLSearchParams(location.search);
+        const currentPage = parseInt(params.get("page")) || 1;
+        const limit = 20;
+        const searchQuery = params.get("q") || "";
+        const sortOption = params.get("sort") || "Default";
+
+        const query = new URLSearchParams({
+          page: currentPage,
+          limit,
+          ...(searchQuery && { search: searchQuery }),
+          ...(sortOption && sortOption !== "Default" && { sort: sortOption }),
+        });
+        // const res = await fetch(`http://localhost:5001/api/products?${query}`);
+        const { data } = await api.get(`/products?${query}`);
+
+        setProducts(data.products);
+        setTotalPages(data.totalPages);
+        setPage(currentPage);
+        setSearchQuery(searchQuery);
+        setSortOption(sortOption);
+        console.log("Current Page:", currentPage);
+        console.log("Search Query:", searchQuery);
+        console.log("Sort Option:", sortOption);
+        console.log("Products:", data.products);
+      } catch (err) {
+        console.error("Error fetching products:", err);
+      }
+    };
+
     fetchProducts();
-  }, [page, searchQuery, sortOption]);
+    // Cleanup to cancel old fetch if effect re-runs
+    return () => controller.abort();
+  }, [location.search]);
 
   // 🔄 Handlers that also update the URL
   const handleSearch = (query) => {
@@ -90,18 +101,33 @@ const ProductPage = () => {
     }
   };
   return (
-    <div className="min-h-screen  bg-accent">
+    <div className="min-h-screen bg-accent">
       <Navbar />
-      <div className="px-4 max-w-6xl mx-auto w-auto">
-        <div className="mt-4">
+      <div className="px-4 max-w-7xl mx-auto w-auto">
+        <div className="mt-4 mb-8">
+          <CarouselBanner />
+        </div>
+        <span className="flex flex-col sm:flex-row justify-between items-baseline">
+          <h1 className="text-4xl font-semibold text-black mb-2">
+            Video Games
+          </h1>
+          <span className="text-xs text-muted-foreground">
+            Showing {products.length} of {totalPages * limit} products
+          </span>
+        </span>
+        <div className="mt-2 mb-4">
           <SearchBar
             onSearch={handleSearch}
             onSort={handleSort}
             currentSort={sortOption}
           />{" "}
         </div>
+
         {products.length > 0 ? (
-          <div className="grid mt-2 grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
+          <div
+            key={location.search}
+            className="grid mt-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2"
+          >
             {products.map((product) => (
               <ProductCard key={product._id} product={product} />
             ))}
@@ -111,7 +137,7 @@ const ProductPage = () => {
             No products found.
           </div>
         )}
-        {totalPages > 1 && products.length === limit && (
+        {totalPages > 1 && (
           <div className="flex justify-center my-8">
             <Pagination>
               <PaginationContent>
@@ -125,7 +151,7 @@ const ProductPage = () => {
                 <PaginationItem>
                   <div className="flex">
                     <span className="mx-2 text-sm text-gray-500">
-                      Page {page} of {totalPages}
+                      {page} / {totalPages}
                     </span>
                   </div>
                 </PaginationItem>

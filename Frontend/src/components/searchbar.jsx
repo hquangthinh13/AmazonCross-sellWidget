@@ -7,7 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Search, ChevronDown } from "lucide-react";
+import { Search, ChevronDown, ArrowDownUp } from "lucide-react";
 
 const SearchBar = ({ onSearch, onSort, currentSort, searchQuery }) => {
   const [searchInput, setSearchInput] = useState(searchQuery || "");
@@ -33,32 +33,38 @@ const SearchBar = ({ onSearch, onSort, currentSort, searchQuery }) => {
   };
 
   return (
-    <div className="flex flex-col justify-between sm:flex-row items-center gap-2 w-full sm:w-auto">
-      <div className="flex max-w-3xl w-full sm:flex-grow gap-2">
+    <div className="flex flex-row justify-between items-center gap-2 w-full sm:w-auto">
+      <div className="flex max-w-3xl w-full gap-2">
         <Input
           value={searchInput ?? ""}
           onChange={(e) => setSearchInput(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Search products..."
-          className="flex-grow bg-white text-sm"
-        />
+          className="flex bg-white text-sm "
+        ></Input>
         <Button
-          variant="default"
+          variant="outline"
+          size="icon"
           onClick={handleSearchClick}
           className="cursor-pointer flex items-center gap-2"
         >
           <Search size={18} />
-          <span className="hidden sm:inline">Search</span>
+          {/* <span className="hidden sm:inline">Search</span> */}
         </Button>
       </div>
 
-      <div className="ml-2 hidden sm:flex md:flex lg:flex ">
+      <div className="flex">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="cursor-pointer gap-2 h-10">
-              {sortOptions.find((opt) => opt.value === currentSort)?.label ||
+            <Button
+              variant="outline"
+              size="icon"
+              className="cursor-pointer gap-2"
+            >
+              {/* {sortOptions.find((opt) => opt.value === currentSort)?.label ||
                 "Sort"}
-              <ChevronDown size={16} />
+              <ChevronDown size={16} /> */}
+              <ArrowDownUp size={16} />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">

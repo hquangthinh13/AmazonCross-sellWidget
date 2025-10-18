@@ -36,7 +36,7 @@ export async function getProducts(req, res) {
         sort = { average_rating: -1 };
         break;
       default:
-        sort = { createdAt: -1 }; // newest first as default
+        sort = { rating_number: -1 }; //
     }
 
     // 🧮 FETCH PRODUCTS
