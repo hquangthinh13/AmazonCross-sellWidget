@@ -1,5 +1,6 @@
 import express from "express";
 import productRoutes from "./routes/productRoutes.js";
+import searchRoutes from "./routes/searchRoutes.js";
 import dotenv from "dotenv";
 import { connectDB } from "./config/db.js";
 import cors from "cors";
@@ -35,6 +36,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/api/search", searchRoutes);
 app.use("/api/products", productRoutes);
 
 app.get("/", (req, res) => {
