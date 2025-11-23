@@ -337,7 +337,7 @@ const ProductDetailPage = () => {
         </div>
         {/* <div className="flex flex-1 justify-between"> */}
         <Tabs defaultValue="spectral" className="flex flex-col flex-1 mt-12">
-          <TabsList className="flex flex-1 gap-2 w-full mx-auto">
+          <TabsList className="flex flex-1 w-full gap-2 mx-auto">
             <TabsTrigger
               className="cursor-pointer flex flex-1"
               value="spectral"
