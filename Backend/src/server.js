@@ -11,7 +11,7 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 const allowedOrigins = [
   "http://localhost:5173", // local dev
-  "#", // your Vercel frontend
+  "https://amazon-cross-sell-widget.vercel.app/",
 ];
 
 app.use(
@@ -38,10 +38,6 @@ app.use((req, res, next) => {
 
 app.use("/api/search", searchRoutes);
 app.use("/api/products", productRoutes);
-
-app.get("/", (req, res) => {
-  res.send("Hello!");
-});
 
 connectDB().then(() => {
   app.listen(PORT, () => {
