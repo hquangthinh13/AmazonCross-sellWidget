@@ -11,7 +11,7 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 const allowedOrigins = [
   "http://localhost:5173", // local dev
-  "https://amazon-cross-sell-widget.vercel.app/",
+  "https://amazon-cross-sell-widget.vercel.app",
 ];
 
 app.use(
