@@ -65,7 +65,7 @@ const Navbar = ({}) => {
 
           <div className="flex items-center gap-4 text-white font-medium text-sm">
             <p className="cursor-pointer">
-              Big Sale on Project Report Day | SHOP NOW
+              Big Sale on Project Report Day 18.12 | SHOP NOW
             </p>
           </div>
         </div>

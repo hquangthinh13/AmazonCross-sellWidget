@@ -10,7 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { CircleQuestionMark } from "lucide-react";
+import { CircleQuestionMark, Star } from "lucide-react";
 
 const REASON_LABELS = {
   co_purchase: "Frequently bought together with this item",
@@ -121,7 +121,7 @@ const RelatedProductDialog = ({ product }) => {
                   {product?.scores.gcn}
                 </div>
                 <div className="italic flex text-xs opacity-50">
-                  Explanation for GCN
+                  Graph convolutions to learn global relational patterns.
                 </div>
               </div>
               <div className="flex flex-col">
@@ -130,16 +130,16 @@ const RelatedProductDialog = ({ product }) => {
                   {product?.scores.node2vec}
                 </div>
                 <div className="italic flex text-xs opacity-50">
-                  Explanation for Node2Vec
+                  Node2Vec embeddings to capture local neighborhood structures.
                 </div>
               </div>
               <div className="flex flex-col">
-                <div className="flex text-xs">Title</div>
+                <div className="flex text-xs">TF-IDF</div>
                 <div className="flex text-md text-primary font-semibold">
                   {product?.scores.title}
                 </div>
                 <div className="italic flex text-xs opacity-50">
-                  Explanation for Node2Vec
+                  The textual similarity between the product titles.
                 </div>
               </div>
 
@@ -149,16 +149,20 @@ const RelatedProductDialog = ({ product }) => {
                   {product?.raw_w}
                 </div>
                 <div className="italic flex text-xs opacity-50">
-                  Explanation
+                  Raw count of co‑purchases or co‑reviews.
                 </div>
               </div>
               <div className="flex flex-col">
-                <div className="flex text-xs ">Final Score</div>
+                <div className="flex text-xs items-center">
+                  Final Score{" "}
+                  <Star className="text-primary ml-1 fill-primary h-3 w-3" />{" "}
+                </div>
                 <div className="flex text-md text-primary  font-semibold">
                   {product?.final_score}
                 </div>
                 <div className="italic flex text-xs opacity-50">
-                  Explanation
+                  The combination of behavioral, structural, and content
+                  signals.
                 </div>
               </div>
             </div>

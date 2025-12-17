@@ -27,6 +27,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import logo from "@/assets/images/Amazon_logo.svg";
 import { renderStars } from "@/utils/utils.jsx";
@@ -160,7 +166,7 @@ const ProductDetailPage = () => {
           </Button>
         </Link>
 
-        <Card className="mt-2 overflow-hidden">
+        <Card className="mt-2 overflow-hidden transition-all duration-200 delay-100">
           <CardContent className="space-y-6 p-6">
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-12 justify-start items-start">
               {/* Images */}
@@ -262,23 +268,72 @@ const ProductDetailPage = () => {
                     Buy now{" "}
                   </Button>
                 </div>
+                {/* Features */}
 
-                {product?.meta_all.features?.length > 0 && (
-                  <>
-                    <Separator className="mt-4 mb-4" />
-                    {/* Features */}
-                    <div className="mt-2">
-                      <span className="text-lg font-semibold antialiased">
-                        About this item
-                      </span>
-                      <ul className="list-disc text-sm text-muted-foreground pl-8">
-                        {product.meta_all.features.map((text, index) => (
-                          <li key={index}>{text}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </>
-                )}
+                <Accordion className="mt-2" type="single" collapsible>
+                  {product?.meta_all.description && (
+                    <AccordionItem value="item-1">
+                      <AccordionTrigger>
+                        <span className="text-lg font-semibold antialiased">
+                          Description
+                        </span>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="list-disc text-sm text-muted-foreground pl-8">
+                          {product.meta_all.description}
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  )}
+                  {product?.meta_all.features?.length > 0 && (
+                    <AccordionItem value="item-2">
+                      <AccordionTrigger>
+                        <span className="text-lg font-semibold antialiased">
+                          Feature
+                        </span>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <ul className="list-disc text-sm text-muted-foreground pl-8">
+                          {product.meta_all.features.map((text, index) => (
+                            <li key={index}>{text}</li>
+                          ))}
+                        </ul>{" "}
+                      </AccordionContent>
+                    </AccordionItem>
+                  )}
+                  {product?.meta_all.details && (
+                    <AccordionItem value="item-3">
+                      <AccordionTrigger>
+                        <span className="text-lg font-semibold antialiased">
+                          Product Details
+                        </span>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <ul className="text-sm text-muted-foreground space-y-2 pl-2">
+                          {Object.entries(product.meta_all.details).map(
+                            ([key, value]) => (
+                              <li key={key} className="flex flex-col">
+                                <span className="font-medium text-foreground">
+                                  {key}
+                                </span>
+                                <span>
+                                  {typeof value === "object"
+                                    ? Object.entries(value)
+                                        .map(
+                                          ([subKey, subValue]) =>
+                                            `${subKey}: ${subValue}`
+                                        )
+                                        .join(", ")
+                                    : value}
+                                </span>
+                              </li>
+                            )
+                          )}
+                        </ul>
+                      </AccordionContent>
+                    </AccordionItem>
+                  )}
+                </Accordion>
               </div>
             </div>{" "}
           </CardContent>
@@ -301,13 +356,14 @@ const ProductDetailPage = () => {
             }}
           >
             {/* Header row */}
-            <div className="flex justify-between items-start mb-2">
-              <div className="flex flex-col flex-1 items-start gap-1">
+            <div className="flex justify-between items-start mb-4">
+              <div className="flex flex-col flex-1 items-start gap-0">
                 <p className="text-xl font-bold text-card-foreground relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[3px] after:bg-primary after:transition-all after:duration-300 hover:after:w-full">
                   Final Recommendation{" "}
                 </p>
                 <p className="relative inline-block text-md text-muted-foreground">
-                  Final{" "}
+                  The combination of behavioral, structural, and content
+                  signals.
                 </p>
               </div>
 

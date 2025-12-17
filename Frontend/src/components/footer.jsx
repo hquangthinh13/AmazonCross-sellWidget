@@ -61,6 +61,9 @@ const Footer = () => {
           </div>
         </div>
         <Separator className="my-12 opacity-40" />
+        <span className="text-white text-sm uppercase font-light tracking-wide mb-6">
+          Social Network Analysis - IS353.Q12.CTTT
+        </span>
         <div className="mt-0 flex flex-row w-full justify-center gap-8">
           <Link to={"/"}>
             <img src={logo} alt="Logo" className="h-7" />
