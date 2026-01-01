@@ -1,14 +1,28 @@
 # Amazon Video Game Network: Evaluation & Web Demo
 
 This repository contains a comprehensive system for building and evaluating the **Amazon Video Game Network**. It includes the core research environment via Jupyter Notebooks and a full-stack MERN (MongoDB, Express, React, Node.js) application for a live web demonstration.
+## 📊 Dataset
+
+The dataset used for both the network evaluation and the web demo is available at the following link:
+
+**Google Drive:**  
+https://drive.google.com/drive/folders/10WzeCQ5u9DYmxQtc6UtKCXKE6GTbiBSF
+
+### Dataset Files
+
+* **`meta_Video_Games.jsonl`**  
+  Contains product-level information such as game titles, categories, and textual descriptions.
+
+* **`Video_Games.jsonl`**  
+  Contains user ratings and interaction history, which are used to construct edges in the video game network.
+
+Download the dataset and place the files in the appropriate directories before running the notebook or starting the backend server.
 
 ## 📂 Project Structure
 
 * **/Notebook**: Contains the core research files, including:
   * **`amazon_game_network.ipynb`**: The primary Jupyter Notebook containing the logic for data cleaning, graph construction, network analysis, and performance evaluation.
-  * **Dataset Files**: 
-    * `video_games_metadata`: Contains product details like titles, categories, and descriptions.
-    * `user_reviews`: Contains user ratings and interaction history used to build network edges.
+
 * **/Frontend**: React (Vite) application using Tailwind CSS, and shadcn/ui.
 * **/Backend**: Node.js and Express API using Mongoose to connect to MongoDB.
 
