@@ -4,7 +4,11 @@ This repository contains a comprehensive system for building and evaluating the 
 
 ## 📂 Project Structure
 
-* **/notebook**: Contains the `.ipynb` file for building and evaluating the game network.
+* **/Notebook**: Contains the core research files, including:
+  * **`amazon_game_network.ipynb`**: The primary Jupyter Notebook containing the logic for data cleaning, graph construction, network analysis, and performance evaluation.
+  * **Dataset Files**: 
+    * `video_games_metadata`: Contains product details like titles, categories, and descriptions.
+    * `user_reviews`: Contains user ratings and interaction history used to build network edges.
 * **/Frontend**: React (Vite) application using Tailwind CSS, and shadcn/ui.
 * **/Backend**: Node.js and Express API using Mongoose to connect to MongoDB.
 
